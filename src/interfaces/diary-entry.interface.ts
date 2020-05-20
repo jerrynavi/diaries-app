@@ -1,5 +1,5 @@
 export interface DiaryEntry {
-  id: string;
+  id: number;
   title: string;
   content: string;
   createdAt: string;
