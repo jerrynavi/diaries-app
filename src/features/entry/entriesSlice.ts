@@ -1,21 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Entry } from '../../interfaces/entry.interface';
 
-const entriesInitialState: Entry[] = [];
-
 const entries = createSlice({
   name: 'entries',
-  initialState: entriesInitialState,
+  initialState: [] as Entry[],
   reducers: {
-    addEntry(state: Entry[], { payload }: PayloadAction<Entry>) {
+    addEntry(state, { payload }: PayloadAction<Entry>) {
       state.push(payload);
     },
-    removeEntry(state: Entry[], { payload }: PayloadAction<{ id: number }>) {
-      state.splice(payload.id, 1);
+    removeEntry(state, { payload }: PayloadAction<number>) {
+      state.splice(payload, 1);
     },
-    updateEntry(state: Entry[], { payload }: PayloadAction<Entry>) {
+    updateEntry(state, { payload }: PayloadAction<Entry>) {
       const { id, ...rest } = payload;
-      let entry = state.find((d) => d.id === id);
+      let entry = state.find((e) => e.id === id);
       if (entry) {
         entry = {
           ...entry,
