@@ -20,7 +20,7 @@ http.interceptors.response.use(
     if (response) {
       if (response.status >= 400 && response.status < 500) {
         return {
-          message: response.data?.message ?? 'An error occurred',
+          message: response.data?.data?.message ?? 'An error occurred',
           isError: true,
         };
       }
