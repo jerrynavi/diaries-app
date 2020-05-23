@@ -16,12 +16,12 @@ export const setupServer = (env?: string): Server => {
     environment: env ?? 'development',
 
     models: {
-      diaryEntry: Model.extend({
+      entry: Model.extend({
         diary: belongsTo(),
       }),
       diary: Model.extend({
         user: belongsTo(),
-        entries: hasMany('diaryEntry'),
+        entry: hasMany(),
       }),
       user: Model.extend({
         diary: hasMany(),

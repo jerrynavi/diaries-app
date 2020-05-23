@@ -2,13 +2,13 @@ import { combineReducers } from '@reduxjs/toolkit';
 import appReducer from './appSlice';
 import authReducer from '../features/auth/authSlice';
 import diariesReducer from '../features/diary/diariesSlice';
-import diaryEntriesSlice from '../features/diary-entry/diaryEntriesSlice';
+import entriesSlice from '../features/entry/entriesSlice';
 
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
   diaries: diariesReducer,
-  diaryEntries: diaryEntriesSlice,
+  entries: entriesSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

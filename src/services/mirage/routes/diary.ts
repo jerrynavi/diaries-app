@@ -1,7 +1,7 @@
 import { Response, Request } from 'miragejs';
 import { handleErrors } from '../server';
 import { Diary } from '../../../interfaces/diary.interface';
-import { DiaryEntry } from '../../../interfaces/diary-entry.interface';
+import { Entry } from '../../../interfaces/entry.interface';
 
 export const create = (schema: any, req: Request): Diary | Response => {
   try {
@@ -19,17 +19,15 @@ export const create = (schema: any, req: Request): Diary | Response => {
   }
 };
 
-export const addEntry = (schema: any, req: Request): DiaryEntry | Response => {
+export const addEntry = (schema: any, req: Request): Entry | Response => {
   try {
     const diary = schema.diaries.find(parseInt(req.params.id));
-    const { title, content } = JSON.parse(req.requestBody) as Partial<
-      DiaryEntry
-    >;
-    const entry = diary.createDiaryEntry({
+    const { title, content } = JSON.parse(req.requestBody) as Partial<Entry>;
+    const entry = diary.createEntry({
       title,
       content,
     });
-    return entry.attrs as DiaryEntry;
+    return entry.attrs as Entry;
   } catch (error) {
     return handleErrors(error, 'Failed to save entry.');
   }
@@ -44,13 +42,10 @@ export const getDiaries = (schema: any, req: Request): Diary[] | Response => {
   }
 };
 
-export const getEntries = (
-  schema: any,
-  req: Request
-): DiaryEntry[] | Response => {
+export const getEntries = (schema: any, req: Request): Entry[] | Response => {
   try {
     const diary = schema.diaries.find(parseInt(req.params.id));
-    return diary.entries as DiaryEntry[];
+    return diary.entries as Entry[];
   } catch (error) {
     return handleErrors(error, 'Failed to get Diary entries.');
   }
@@ -69,17 +64,14 @@ export const updateDiary = (schema: any, req: Request): Diary | Response => {
   }
 };
 
-export const updateEntry = (
-  schema: any,
-  req: Request
-): DiaryEntry | Response => {
+export const updateEntry = (schema: any, req: Request): Entry | Response => {
   try {
-    const diaryEntry = schema.diaryEntries.find(parseInt(req.params.id));
-    const data = JSON.parse(req.requestBody) as Partial<DiaryEntry>;
+    const diaryEntry = schema.entries.find(parseInt(req.params.id));
+    const data = JSON.parse(req.requestBody) as Partial<Entry>;
     diaryEntry.update({
       ...data,
     });
-    return diaryEntry.attrs as DiaryEntry;
+    return diaryEntry.attrs as Entry;
   } catch (error) {
     return handleErrors(error, 'Failed to update entry.');
   }
