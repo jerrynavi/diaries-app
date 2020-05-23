@@ -66,12 +66,12 @@ export const updateDiary = (schema: any, req: Request): Diary | Response => {
 
 export const updateEntry = (schema: any, req: Request): Entry | Response => {
   try {
-    const diaryEntry = schema.entries.find(parseInt(req.params.id));
+    const entry = schema.entries.find(parseInt(req.params.id));
     const data = JSON.parse(req.requestBody) as Partial<Entry>;
-    diaryEntry.update({
+    entry.update({
       ...data,
     });
-    return diaryEntry.attrs as Entry;
+    return entry.attrs as Entry;
   } catch (error) {
     return handleErrors(error, 'Failed to update entry.');
   }

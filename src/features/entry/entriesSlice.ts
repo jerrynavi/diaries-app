@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Entry } from '../../interfaces/entry.interface';
 
-const diaryEntriesInitState: Entry[] = [];
+const entriesInitialState: Entry[] = [];
 
-const diaryEntries = createSlice({
-  name: 'diaryEntries',
-  initialState: diaryEntriesInitState,
+const entries = createSlice({
+  name: 'entries',
+  initialState: entriesInitialState,
   reducers: {
     addEntry(state: Entry[], { payload }: PayloadAction<Entry>) {
       state.push(payload);
@@ -27,6 +27,6 @@ const diaryEntries = createSlice({
   },
 });
 
-export const { addEntry, removeEntry, updateEntry } = diaryEntries.actions;
+export const { addEntry, removeEntry, updateEntry } = entries.actions;
 
-export default diaryEntries.reducer;
+export default entries.reducer;
