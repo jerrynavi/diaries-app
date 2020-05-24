@@ -28,6 +28,10 @@ const login = (schema: any, req: Request): AuthResponse | Response => {
 
 const signup = (schema: any, req: Request): AuthResponse | Response => {
   const data = JSON.parse(req.requestBody);
+  const exUser = schema.users.findBy({ username: data.username });
+  if (exUser) {
+    return handleErrors(null, 'A user with that username already exists.');
+  }
   const user = schema.users.create(data);
   const token = generateToken();
   return {
