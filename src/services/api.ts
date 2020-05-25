@@ -20,34 +20,37 @@ http.interceptors.response.use(
     }: { response?: AxiosResponse; request?: XMLHttpRequest } = error;
     if (response) {
       if (response.status >= 400 && response.status < 500) {
-        return Swal.fire({
-          titleText: response.data?.data?.message ?? 'An error occurred',
-          position: 'top-end',
-          timer: 3000,
-          timerProgressBar: true,
-          toast: true,
-          showConfirmButton: false,
-          showCancelButton: true,
-          cancelButtonText: 'Dismiss',
-          icon: 'error',
-          showClass: {
-            popup: 'swal2-noanimation',
-            backdrop: 'swal2-noanimation',
-          },
-          hideClass: {
-            popup: '',
-            backdrop: '',
-          },
-        });
+        showAlert(response.data?.data?.message);
+        return null;
       }
     } else if (request) {
-      return {
-        message: 'Request failed. Please try again.',
-        isError: true,
-      };
+      showAlert('Request failed. Please try again.');
+      return null;
     }
-    return Promise.reject(error.response);
+    return Promise.reject(error);
   }
 );
+
+const showAlert = (titleText = 'An error occurred.') => {
+  Swal.fire({
+    titleText,
+    position: 'top-end',
+    timer: 3000,
+    timerProgressBar: true,
+    toast: true,
+    showConfirmButton: false,
+    showCancelButton: true,
+    cancelButtonText: 'Dismiss',
+    icon: 'error',
+    showClass: {
+      popup: 'swal2-noanimation',
+      backdrop: 'swal2-noanimation',
+    },
+    hideClass: {
+      popup: '',
+      backdrop: '',
+    },
+  });
+};
 
 export default http;
