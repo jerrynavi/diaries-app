@@ -1,8 +1,8 @@
 export interface Entry {
-  id: number;
+  id?: string;
   title: string;
   content: string;
-  createdAt: string;
-  updatedAt: string;
-  diaryId?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  diaryId?: string;
 }
