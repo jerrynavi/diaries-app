@@ -13,13 +13,13 @@ const entries = createSlice({
     },
     updateEntry(state, { payload }: PayloadAction<Entry>) {
       const { id, ...rest } = payload;
-      let entry = state.find((e) => e.id === id);
-      if (entry) {
-        entry = {
-          ...entry,
+      let index = state.findIndex((e) => e.id === id);
+      if (index !== -1) {
+        const entry: Entry = {
+          ...state[index],
           ...rest,
         };
-        state.splice(id, 1, entry);
+        state.splice(index, 1, entry);
       }
     },
   },

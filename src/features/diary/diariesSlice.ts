@@ -11,12 +11,12 @@ const diaries = createSlice({
       });
       state.push(...diariesToSave);
     },
-    updateDiary(
-      state,
-      { payload }: PayloadAction<{ diary: Diary; id: number }>
-    ) {
-      const { id, diary } = payload;
-      state.splice(id, 1, diary);
+    updateDiary(state, { payload }: PayloadAction<Diary>) {
+      const { id } = payload;
+      const diaryIndex = state.findIndex((diary) => diary.id === id);
+      if (diaryIndex !== -1) {
+        state.splice(diaryIndex, 1, payload);
+      }
     },
     deleteDiary(state, { payload }: PayloadAction<number>) {
       state.splice(payload, 1);
