@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { FC, lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../rootReducer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const Auth = lazy(() => import('../features/auth/Auth'));
+const Home = lazy(() => import('../features/home/Home'));
+
+const App: FC = () => {
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
   );
-}
+
+  return (
+    <Router>
+      <Switch>
+        <Route path="/">
+          <Suspense fallback={<p>Loading...</p>}>
+            {isLoggedIn ? <Home /> : <Auth />}
+          </Suspense>
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;
