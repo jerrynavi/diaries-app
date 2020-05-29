@@ -20,11 +20,11 @@ http.interceptors.response.use(
     }: { response?: AxiosResponse; request?: XMLHttpRequest } = error;
     if (response) {
       if (response.status >= 400 && response.status < 500) {
-        showAlert(response.data?.data?.message);
+        showAlert(response.data?.data?.message, 'error');
         return null;
       }
     } else if (request) {
-      showAlert('Request failed. Please try again.');
+      showAlert('Request failed. Please try again.', 'error');
       return null;
     }
     return Promise.reject(error);
