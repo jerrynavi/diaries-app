@@ -5,7 +5,6 @@ import Markdown from 'markdown-to-jsx';
 import http from '../../services/api';
 import { Entry } from '../../interfaces/entry.interface';
 import { Diary } from '../../interfaces/diary.interface';
-import Swal from 'sweetalert2';
 import {
   setCurrentlyEditing,
   setLoading,
@@ -13,6 +12,7 @@ import {
 } from '../../app/appSlice';
 import { updateDiary } from '../diary/diariesSlice';
 import { addEntry, updateEntry } from './entriesSlice';
+import { showAlert } from '../../util';
 
 const Editor: FC = () => {
   const {
@@ -27,12 +27,7 @@ const Editor: FC = () => {
 
   const saveEntry = async () => {
     if (activeDiaryId === null) {
-      return Swal.fire({
-        titleText: 'Please select a diary.',
-        toast: true,
-        icon: 'warning',
-        position: 'top-end',
-      });
+      return showAlert('Please select a diary.', 'warning');
     }
     dispatch(setLoading(true));
     if (entry === null) {

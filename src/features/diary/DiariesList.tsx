@@ -7,6 +7,7 @@ import { addDiary } from './diariesSlice';
 import Swal from 'sweetalert2';
 import { setUser } from '../auth/userSlice';
 import DiaryTile from './DiaryTile';
+import { User } from '../../interfaces/user.interface';
 
 const DiariesList: FC = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const DiariesList: FC = () => {
   useEffect(() => {
     const fetchDiaries = async () => {
       if (user) {
-        http.get<any, any>(`diaries/${user.id}`).then((data: Diary[]) => {
+        http.get<null, Diary[]>(`diaries/${user.id}`).then((data) => {
           if (data && data.length > 0) {
             dispatch(addDiary(data));
           }
@@ -50,7 +51,10 @@ const DiariesList: FC = () => {
     ]);
     if (result.value) {
       const { value } = result;
-      const { diary, user: _user } = await http.post<any, any>('/diaries/', {
+      const { diary, user: _user } = await http.post<
+        Partial<Diary>,
+        { diary: Diary; user: User }
+      >('/diaries/', {
         title: value[0],
         type: value[1],
         userId: user?.id,

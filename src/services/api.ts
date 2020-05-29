@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
-import Swal from 'sweetalert2';
+import { showAlert } from '../util';
 
 const http: AxiosInstance = axios.create({
   baseURL: 'https://diaries.app',
@@ -30,27 +30,5 @@ http.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-const showAlert = (titleText = 'An error occurred.') => {
-  Swal.fire({
-    titleText,
-    position: 'top-end',
-    timer: 3000,
-    timerProgressBar: true,
-    toast: true,
-    showConfirmButton: false,
-    showCancelButton: true,
-    cancelButtonText: 'Dismiss',
-    icon: 'error',
-    showClass: {
-      popup: 'swal2-noanimation',
-      backdrop: 'swal2-noanimation',
-    },
-    hideClass: {
-      popup: '',
-      backdrop: '',
-    },
-  });
-};
 
 export default http;

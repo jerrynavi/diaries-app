@@ -2,13 +2,13 @@ import React, { FC, useState } from 'react';
 import { Diary } from '../../interfaces/diary.interface';
 import http from '../../services/api';
 import { updateDiary } from './diariesSlice';
-import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import {
   setIsEditing,
   setActiveDiaryId,
   setCurrentlyEditing,
 } from '../../app/appSlice';
+import { showAlert } from '../../util';
 
 interface Props {
   diary: Diary;
@@ -32,12 +32,7 @@ const DiaryTile: FC<Props> = (props) => {
       .then((diary) => {
         if (diary) {
           dispatch(updateDiary(diary));
-          Swal.fire({
-            titleText: 'Saved!',
-            toast: true,
-            timer: 3000,
-            position: 'top-end',
-          });
+          showAlert('Saved!', 'success');
         }
       })
       .finally(() => {

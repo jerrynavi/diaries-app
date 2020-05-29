@@ -28,8 +28,8 @@ const Auth: FC = () => {
   const submitForm = (data: User) => {
     const path = isLogin ? '/auth/login' : '/auth/signup';
     http
-      .post<any, any>(path, data)
-      .then((res: AuthResponse) => {
+      .post<User, AuthResponse>(path, data)
+      .then((res) => {
         if (res) {
           const { user, token } = res;
           dispatch(saveToken(token));
