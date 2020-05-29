@@ -67,10 +67,13 @@ export const getDiaries = (schema: any, req: Request): Diary[] | Response => {
   }
 };
 
-export const getEntries = (schema: any, req: Request): Entry[] | Response => {
+export const getEntries = (
+  schema: any,
+  req: Request
+): { entries: Entry[] } | Response => {
   try {
     const diary = schema.diaries.find(req.params.id);
-    return diary.entries as Entry[];
+    return diary.entry;
   } catch (error) {
     return handleErrors(error, 'Failed to get Diary entries.');
   }

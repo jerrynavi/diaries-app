@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../rootReducer';
 import Markdown from 'markdown-to-jsx';
@@ -7,7 +7,7 @@ import { Entry } from '../../interfaces/entry.interface';
 import { Diary } from '../../interfaces/diary.interface';
 import { setCurrentlyEditing, setCanEdit } from './editorSlice';
 import { updateDiary } from '../diary/diariesSlice';
-import { addEntry, updateEntry } from './entriesSlice';
+import { updateEntry } from './entriesSlice';
 import { showAlert } from '../../util';
 
 const Editor: FC = () => {
@@ -32,7 +32,6 @@ const Editor: FC = () => {
           if (data !== null) {
             const { diary, entry: _entry } = data;
             dispatch(setCurrentlyEditing(_entry));
-            dispatch(addEntry(_entry));
             dispatch(updateDiary(diary));
           }
         });
@@ -49,6 +48,10 @@ const Editor: FC = () => {
     dispatch(setCanEdit(false));
   };
 
+  useEffect(() => {
+    updateEditedEntry(entry);
+  }, [entry]);
+
   return (
     <div className="editor">
       <header
@@ -56,14 +59,30 @@ const Editor: FC = () => {
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',
-          marginBottom: '0.3em',
+          marginBottom: '0.2em',
+          paddingBottom: '0.2em',
+          borderBottom: '1px solid rgba(0,0,0,0.1)',
         }}
       >
         {entry && !canEdit ? (
-          <h4>{entry.title}</h4>
+          <h4>
+            {entry.title}
+            <a
+              href="#edit"
+              onClick={(e) => {
+                e.preventDefault();
+                if (entry !== null) {
+                  dispatch(setCanEdit(true));
+                }
+              }}
+              style={{ marginLeft: '0.4em' }}
+            >
+              (Edit)
+            </a>
+          </h4>
         ) : (
           <input
-            value={entry?.title}
+            value={editedEntry?.title ?? ''}
             disabled={!canEdit}
             onChange={(e) => {
               if (editedEntry) {
@@ -88,7 +107,7 @@ const Editor: FC = () => {
           <textarea
             disabled={!canEdit}
             placeholder="Supports markdown!"
-            value={entry?.content}
+            value={editedEntry?.content ?? ''}
             onChange={(e) => {
               if (editedEntry) {
                 updateEditedEntry({

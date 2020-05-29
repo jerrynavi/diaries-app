@@ -5,11 +5,8 @@ const entries = createSlice({
   name: 'entries',
   initialState: [] as Entry[],
   reducers: {
-    addEntry(state, { payload }: PayloadAction<Entry>) {
-      state.push(payload);
-    },
-    removeEntry(state, { payload }: PayloadAction<number>) {
-      state.splice(payload, 1);
+    setEntries(state, { payload }: PayloadAction<Entry[] | null>) {
+      return (state = payload !== null ? payload : []);
     },
     updateEntry(state, { payload }: PayloadAction<Entry>) {
       const { id, ...rest } = payload;
@@ -25,6 +22,6 @@ const entries = createSlice({
   },
 });
 
-export const { addEntry, removeEntry, updateEntry } = entries.actions;
+export const { setEntries, updateEntry } = entries.actions;
 
 export default entries.reducer;

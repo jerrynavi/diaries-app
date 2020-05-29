@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { setUser } from '../auth/userSlice';
 import DiaryTile from './DiaryTile';
 import { User } from '../../interfaces/user.interface';
+import { Route, Switch } from 'react-router-dom';
+import DiaryEntries from './DiaryEntries';
 
 const DiariesList: FC = () => {
   const dispatch = useDispatch();
@@ -77,10 +79,17 @@ const DiariesList: FC = () => {
 
   return (
     <div style={{ padding: '1em 0.4em' }}>
-      <button onClick={createDiary}>Create New</button>
-      {diaries.map((diary, idx) => (
-        <DiaryTile key={idx} diary={diary} />
-      ))}
+      <Switch>
+        <Route path="/diary/:id">
+          <DiaryEntries />
+        </Route>
+        <Route path="/">
+          <button onClick={createDiary}>Create New</button>
+          {diaries.map((diary, idx) => (
+            <DiaryTile key={idx} diary={diary} />
+          ))}
+        </Route>
+      </Switch>
     </div>
   );
 };

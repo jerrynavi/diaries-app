@@ -149,6 +149,21 @@ button:focus {
   height: calc(100vh - 160px);
 }
 
+.entries ul {
+  list-style: none;
+  padding: 0;
+}
+
+.entries li {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.entries li:nth-child(even) {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 @media (min-width: 768px) {
   .two-cols .left {
     width: 25%;

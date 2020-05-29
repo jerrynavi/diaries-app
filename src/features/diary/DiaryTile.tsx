@@ -9,6 +9,7 @@ import {
   setCurrentlyEditing,
 } from '../entry/editorSlice';
 import { showAlert } from '../../util';
+import { Link } from 'react-router-dom';
 
 interface Props {
   diary: Diary;
@@ -82,9 +83,11 @@ const DiaryTile: FC<Props> = (props) => {
         >
           Add New Entry
         </button>
-        <button className="secondary" style={buttonStyle}>
-          View all &rarr;
-        </button>
+        <Link to={`diary/${diary.id}`}>
+          <button className="secondary" style={buttonStyle}>
+            View all &rarr;
+          </button>
+        </Link>
       </div>
     </div>
   );
