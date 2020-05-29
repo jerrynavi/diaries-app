@@ -5,22 +5,15 @@ import Markdown from 'markdown-to-jsx';
 import http from '../../services/api';
 import { Entry } from '../../interfaces/entry.interface';
 import { Diary } from '../../interfaces/diary.interface';
-import {
-  setCurrentlyEditing,
-  setLoading,
-  setIsEditing,
-} from '../../app/appSlice';
+import { setCurrentlyEditing, setCanEdit } from './editorSlice';
 import { updateDiary } from '../diary/diariesSlice';
 import { addEntry, updateEntry } from './entriesSlice';
 import { showAlert } from '../../util';
 
 const Editor: FC = () => {
-  const {
-    currentlyEditing: entry,
-    isEditing,
-    loading,
-    activeDiaryId,
-  } = useSelector((state: RootState) => state.app);
+  const { currentlyEditing: entry, canEdit, activeDiaryId } = useSelector(
+    (state: RootState) => state.editor
+  );
 
   const [editedEntry, updateEditedEntry] = useState(entry);
   const dispatch = useDispatch();
@@ -29,7 +22,6 @@ const Editor: FC = () => {
     if (activeDiaryId === null) {
       return showAlert('Please select a diary.', 'warning');
     }
-    dispatch(setLoading(true));
     if (entry === null) {
       http
         .post<Entry, { diary: Diary; entry: Entry }>(
@@ -54,8 +46,7 @@ const Editor: FC = () => {
           }
         });
     }
-    dispatch(setIsEditing(false));
-    dispatch(setLoading(false));
+    dispatch(setCanEdit(false));
   };
 
   return (
@@ -68,12 +59,12 @@ const Editor: FC = () => {
           marginBottom: '0.3em',
         }}
       >
-        {!isEditing ? (
-          <h4>{entry?.title ?? 'New Entry...'}</h4>
+        {entry && !canEdit ? (
+          <h4>{entry.title}</h4>
         ) : (
           <input
             value={entry?.title}
-            disabled={loading}
+            disabled={!canEdit}
             onChange={(e) => {
               if (editedEntry) {
                 updateEditedEntry({
@@ -90,11 +81,12 @@ const Editor: FC = () => {
           />
         )}
       </header>
-      {entry && !isEditing ? (
+      {entry && !canEdit ? (
         <Markdown>{entry.content}</Markdown>
       ) : (
         <>
           <textarea
+            disabled={!canEdit}
             placeholder="Supports markdown!"
             value={entry?.content}
             onChange={(e) => {
@@ -111,7 +103,7 @@ const Editor: FC = () => {
               }
             }}
           />
-          <button onClick={saveEntry} disabled={!isEditing}>
+          <button onClick={saveEntry} disabled={!canEdit}>
             Save
           </button>
         </>

@@ -4,10 +4,10 @@ import http from '../../services/api';
 import { updateDiary } from './diariesSlice';
 import { useDispatch } from 'react-redux';
 import {
-  setIsEditing,
+  setCanEdit,
   setActiveDiaryId,
   setCurrentlyEditing,
-} from '../../app/appSlice';
+} from '../entry/editorSlice';
 import { showAlert } from '../../util';
 
 interface Props {
@@ -21,7 +21,7 @@ const buttonStyle: React.CSSProperties = {
 
 const DiaryTile: FC<Props> = (props) => {
   const [diary, setDiary] = useState(props.diary);
-  const [canEdit, setCanEdit] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
 
   const totalEntries = props.diary?.entryIds?.length;
@@ -36,7 +36,7 @@ const DiaryTile: FC<Props> = (props) => {
         }
       })
       .finally(() => {
-        setCanEdit(false);
+        setIsEditing(false);
       });
   };
 
@@ -45,12 +45,12 @@ const DiaryTile: FC<Props> = (props) => {
       <h2
         className="title"
         title="Click to edit"
-        onClick={() => setCanEdit(true)}
+        onClick={() => setIsEditing(true)}
         style={{
           cursor: 'pointer',
         }}
       >
-        {canEdit ? (
+        {isEditing ? (
           <input
             value={diary.title}
             onChange={(e) => {
@@ -75,7 +75,7 @@ const DiaryTile: FC<Props> = (props) => {
         <button
           style={buttonStyle}
           onClick={() => {
-            dispatch(setIsEditing(true));
+            dispatch(setCanEdit(true));
             dispatch(setActiveDiaryId(diary.id as string));
             dispatch(setCurrentlyEditing(null));
           }}
