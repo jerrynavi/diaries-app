@@ -13,7 +13,7 @@ const DiaryEntriesList: FC = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (id !== null) {
+    if (id != null) {
       http
         .get<null, { entries: Entry[] }>(`/diaries/entries/${id}`)
         .then(({ entries: _entries }) => {

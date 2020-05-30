@@ -6,7 +6,7 @@ const entries = createSlice({
   initialState: [] as Entry[],
   reducers: {
     setEntries(state, { payload }: PayloadAction<Entry[] | null>) {
-      return (state = payload !== null ? payload : []);
+      return (state = payload != null ? payload : []);
     },
     updateEntry(state, { payload }: PayloadAction<Entry>) {
       const { id, ...rest } = payload;

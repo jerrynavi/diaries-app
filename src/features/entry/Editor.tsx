@@ -19,17 +19,17 @@ const Editor: FC = () => {
   const dispatch = useDispatch();
 
   const saveEntry = async () => {
-    if (activeDiaryId === null) {
+    if (activeDiaryId == null) {
       return showAlert('Please select a diary.', 'warning');
     }
-    if (entry === null) {
+    if (entry == null) {
       http
         .post<Entry, { diary: Diary; entry: Entry }>(
           `/diaries/entry/${activeDiaryId}`,
           editedEntry
         )
         .then((data) => {
-          if (data !== null) {
+          if (data != null) {
             const { diary, entry: _entry } = data;
             dispatch(setCurrentlyEditing(_entry));
             dispatch(updateDiary(diary));
@@ -39,7 +39,7 @@ const Editor: FC = () => {
       http
         .put<Entry, Entry>(`diaries/entry/${entry.id}`, editedEntry)
         .then((_entry) => {
-          if (_entry !== null) {
+          if (_entry != null) {
             dispatch(setCurrentlyEditing(_entry));
             dispatch(updateEntry(_entry));
           }
@@ -71,7 +71,7 @@ const Editor: FC = () => {
               href="#edit"
               onClick={(e) => {
                 e.preventDefault();
-                if (entry !== null) {
+                if (entry != null) {
                   dispatch(setCanEdit(true));
                 }
               }}

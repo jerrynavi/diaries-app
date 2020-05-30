@@ -18,7 +18,7 @@ const editor = createSlice({
   initialState,
   reducers: {
     setCanEdit(state, { payload }: PayloadAction<boolean>) {
-      state.canEdit = payload !== null ? payload : !state.canEdit;
+      state.canEdit = payload != null ? payload : !state.canEdit;
     },
     setCurrentlyEditing(state, { payload }: PayloadAction<Entry | null>) {
       state.currentlyEditing = payload;
