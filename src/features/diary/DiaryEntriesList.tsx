@@ -6,6 +6,7 @@ import http from '../../services/api';
 import { Entry } from '../../interfaces/entry.interface';
 import { setEntries } from '../entry/entriesSlice';
 import { setCurrentlyEditing, setCanEdit } from '../entry/editorSlice';
+import dayjs from 'dayjs';
 
 const DiaryEntriesList: FC = () => {
   const { entries } = useSelector((state: RootState) => state);
@@ -18,7 +19,10 @@ const DiaryEntriesList: FC = () => {
         .get<null, { entries: Entry[] }>(`/diaries/entries/${id}`)
         .then(({ entries: _entries }) => {
           if (_entries) {
-            dispatch(setEntries(_entries));
+            const sortByLastUpdated = _entries.sort((a, b) => {
+              return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
+            });
+            dispatch(setEntries(sortByLastUpdated));
           }
         });
     }
