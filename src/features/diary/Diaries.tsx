@@ -11,7 +11,7 @@ import { User } from '../../interfaces/user.interface';
 import { Route, Switch } from 'react-router-dom';
 import DiaryEntriesList from './DiaryEntriesList';
 
-const DiariesList: FC = () => {
+const Diaries: FC = () => {
   const dispatch = useDispatch();
   const diaries = useSelector((state: RootState) => state.diaries);
   const user = useSelector((state: RootState) => state.user);
@@ -94,4 +94,4 @@ const DiariesList: FC = () => {
   );
 };
 
-export default DiariesList;
+export default Diaries;
