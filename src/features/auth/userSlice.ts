@@ -8,14 +8,9 @@ const user = createSlice({
     setUser(state, { payload }: PayloadAction<User>) {
       return (state = payload);
     },
-    clearUser(state) {
-      if (state) {
-        return (state = null);
-      }
-    },
   },
 });
 
-export const { setUser, clearUser } = user.actions;
+export const { setUser } = user.actions;
 
 export default user.reducer;
