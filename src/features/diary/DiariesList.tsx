@@ -9,7 +9,7 @@ import { setUser } from '../auth/userSlice';
 import DiaryTile from './DiaryTile';
 import { User } from '../../interfaces/user.interface';
 import { Route, Switch } from 'react-router-dom';
-import DiaryEntries from './DiaryEntries';
+import DiaryEntriesList from './DiaryEntriesList';
 
 const DiariesList: FC = () => {
   const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const DiariesList: FC = () => {
     <div style={{ padding: '1em 0.4em' }}>
       <Switch>
         <Route path="/diary/:id">
-          <DiaryEntries />
+          <DiaryEntriesList />
         </Route>
         <Route path="/">
           <button onClick={createDiary}>Create New</button>

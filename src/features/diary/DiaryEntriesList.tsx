@@ -7,7 +7,7 @@ import { Entry } from '../../interfaces/entry.interface';
 import { setEntries } from '../entry/entriesSlice';
 import { setCurrentlyEditing, setCanEdit } from '../entry/editorSlice';
 
-const DiaryEntries: FC = () => {
+const DiaryEntriesList: FC = () => {
   const { entries } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -48,4 +48,4 @@ const DiaryEntries: FC = () => {
   );
 };
 
-export default DiaryEntries;
+export default DiaryEntriesList;

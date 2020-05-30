@@ -83,7 +83,7 @@ const DiaryTile: FC<Props> = (props) => {
         >
           Add New Entry
         </button>
-        <Link to={`diary/${diary.id}`}>
+        <Link to={`diary/${diary.id}`} style={{ width: '100%' }}>
           <button className="secondary" style={buttonStyle}>
             View all &rarr;
           </button>

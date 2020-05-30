@@ -5,14 +5,14 @@ interface AuthState {
   isAuthenticated: boolean;
 }
 
-const initialAuthState: AuthState = {
+const initialState: AuthState = {
   token: null,
   isAuthenticated: false,
 };
 
 const auth = createSlice({
   name: 'auth',
-  initialState: initialAuthState,
+  initialState,
   reducers: {
     saveToken(state, { payload }: PayloadAction<string>) {
       if (payload) {
