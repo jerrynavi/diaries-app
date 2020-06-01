@@ -11,6 +11,7 @@ import { User } from '../../interfaces/user.interface';
 import { Route, Switch } from 'react-router-dom';
 import DiaryEntriesList from './DiaryEntriesList';
 import { useAppDispatch } from '../../store';
+import dayjs from 'dayjs';
 
 const Diaries: FC = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,10 @@ const Diaries: FC = () => {
       if (user) {
         http.get<null, Diary[]>(`diaries/${user.id}`).then((data) => {
           if (data && data.length > 0) {
-            dispatch(addDiary(data));
+            const sortedByUpdatedAt = data.sort((a, b) => {
+              return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
+            });
+            dispatch(addDiary(sortedByUpdatedAt));
           }
         });
       }

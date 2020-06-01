@@ -49,6 +49,10 @@ export const addEntry = (
       createdAt: now,
       updatedAt: now,
     });
+    diary.update({
+      ...diary.attrs,
+      updatedAt: now,
+    });
     return {
       diary: diary.attrs,
       entry: entry.attrs,
