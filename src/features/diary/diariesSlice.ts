@@ -18,12 +18,9 @@ const diaries = createSlice({
         state.splice(diaryIndex, 1, payload);
       }
     },
-    deleteDiary(state, { payload }: PayloadAction<number>) {
-      state.splice(payload, 1);
-    },
   },
 });
 
-export const { addDiary, updateDiary, deleteDiary } = diaries.actions;
+export const { addDiary, updateDiary } = diaries.actions;
 
 export default diaries.reducer;

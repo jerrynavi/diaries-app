@@ -9,14 +9,10 @@ const entries = createSlice({
       return (state = payload != null ? payload : []);
     },
     updateEntry(state, { payload }: PayloadAction<Entry>) {
-      const { id, ...rest } = payload;
-      let index = state.findIndex((e) => e.id === id);
+      const { id } = payload;
+      const index = state.findIndex((e) => e.id === id);
       if (index !== -1) {
-        const entry: Entry = {
-          ...state[index],
-          ...rest,
-        };
-        state.splice(index, 1, entry);
+        state.splice(index, 1, payload);
       }
     },
   },
