@@ -5,8 +5,8 @@ import * as Yup from 'yup';
 import http from '../../services/api';
 import { saveToken, setAuthState } from './authSlice';
 import { setUser } from './userSlice';
-import { useDispatch } from 'react-redux';
 import { AuthResponse } from '../../services/mirage/routes/user';
+import { useAppDispatch } from '../../store';
 
 const schema = Yup.object().shape({
   username: Yup.string()
@@ -23,7 +23,7 @@ const Auth: FC = () => {
 
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const submitForm = (data: User) => {
     const path = isLogin ? '/auth/login' : '/auth/signup';
@@ -70,22 +70,29 @@ const Auth: FC = () => {
 
           {!isLogin && (
             <div className="inputWrapper">
-              <input ref={register} name="email" placeholder="Email" />
+              <input
+                ref={register}
+                name="email"
+                placeholder="Email (optional)"
+              />
               {errors && errors.email && (
                 <p className="error">{errors.email.message}</p>
               )}
             </div>
           )}
 
-          <p onClick={() => setIsLogin(!isLogin)} style={{ cursor: 'pointer' }}>
-            {isLogin ? 'No account? Create one' : 'Login to your account'}
-          </p>
-
           <div className="inputWrapper">
             <button type="submit" disabled={loading}>
               {isLogin ? 'Login' : 'Create account'}
             </button>
           </div>
+
+          <p
+            onClick={() => setIsLogin(!isLogin)}
+            style={{ cursor: 'pointer', opacity: 0.7 }}
+          >
+            {isLogin ? 'No account? Create one' : 'Already have an account?'}
+          </p>
         </form>
       </div>
     </div>

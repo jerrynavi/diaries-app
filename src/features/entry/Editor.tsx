@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../rootReducer';
 import Markdown from 'markdown-to-jsx';
 import http from '../../services/api';
@@ -9,6 +9,7 @@ import { setCurrentlyEditing, setCanEdit } from './editorSlice';
 import { updateDiary } from '../diary/diariesSlice';
 import { updateEntry } from './entriesSlice';
 import { showAlert } from '../../util';
+import { useAppDispatch } from '../../store';
 
 const Editor: FC = () => {
   const { currentlyEditing: entry, canEdit, activeDiaryId } = useSelector(
@@ -16,7 +17,7 @@ const Editor: FC = () => {
   );
 
   const [editedEntry, updateEditedEntry] = useState(entry);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const saveEntry = async () => {
     if (activeDiaryId == null) {

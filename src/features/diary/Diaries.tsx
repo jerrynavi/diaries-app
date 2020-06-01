@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../rootReducer';
 import http from '../../services/api';
 import { Diary } from '../../interfaces/diary.interface';
@@ -10,9 +10,10 @@ import DiaryTile from './DiaryTile';
 import { User } from '../../interfaces/user.interface';
 import { Route, Switch } from 'react-router-dom';
 import DiaryEntriesList from './DiaryEntriesList';
+import { useAppDispatch } from '../../store';
 
 const Diaries: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const diaries = useSelector((state: RootState) => state.diaries);
   const user = useSelector((state: RootState) => state.user);
 

@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react';
 import { Diary } from '../../interfaces/diary.interface';
 import http from '../../services/api';
 import { updateDiary } from './diariesSlice';
-import { useDispatch } from 'react-redux';
 import {
   setCanEdit,
   setActiveDiaryId,
@@ -10,6 +9,7 @@ import {
 } from '../entry/editorSlice';
 import { showAlert } from '../../util';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../store';
 
 interface Props {
   diary: Diary;
@@ -23,7 +23,7 @@ const buttonStyle: React.CSSProperties = {
 const DiaryTile: FC<Props> = (props) => {
   const [diary, setDiary] = useState(props.diary);
   const [isEditing, setIsEditing] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const totalEntries = props.diary?.entryIds?.length;
 
